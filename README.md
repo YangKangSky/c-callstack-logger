@@ -33,3 +33,5 @@ link: https://sii.pl/blog/en/call-stack-logger-function-instrumentation-as-a-way
 
 backtrace: 
 https://chromium.googlesource.com/chromiumos/third_party/cairo/+/master/util/backtrace-symbols.c
+
+https://www.codenong.com/34054445/
