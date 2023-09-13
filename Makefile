@@ -1,6 +1,18 @@
+LOCAL_PATH:=$(shell pwd)
+
+ROOT_PATH = $(LOCAL_PATH)
+BUILD_DIR := ${ROOT_PATH}/build
+INC_DIR := ${ROOT_PATH}/include
+LIB_DIR := ${ROOT_PATH}/lib
+
+export ROOT_PATH
+export BUILD_DIR
+export INC_DIR
+export LIB_DIR
+
+
 SUBDIRS = src test
-ODIR = build
-EXECUTABLE = $(ODIR)/runDemo
+EXECUTABLE = $(BUILD_DIR)/runDemo
 MKDIR_P = mkdir -p
 
 .PHONY: all
@@ -11,13 +23,16 @@ subdirs:
 	   $(MAKE) -C $$dir; \
 	done
 
-makedirs: $(ODIR)
+makedirs: $(BUILD_DIR)
 
-${ODIR}:
-	${MKDIR_P} ${ODIR}
+${BUILD_DIR}:
+	${MKDIR_P} ${BUILD_DIR}
 
 run:
 	$(EXECUTABLE)
 
 clean:
-	rm -f $(ODIR)/* trace.out
+	for dir in $(SUBDIRS); do \
+	   $(MAKE) -C $$dir clean; \
+	done
+	rm -f $(BUILD_DIR)/* trace.out

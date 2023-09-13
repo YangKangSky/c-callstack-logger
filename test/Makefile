@@ -23,21 +23,18 @@ CC ?= cc
 #CFLAGS += -finstrument-functions-exclude-file-list=$(CPP_STD_INCLUDES)
 CFLAGS = -g -Wall -rdynamic -finstrument-functions 
 
-IDIR = ../include
-ODIR = ../build
-LIB_DIR = ../lib
-INCS = -I$(IDIR) -L$(LIB_DIR)
-LIBS = -L${ODIR} -l:libcallstacklogger.a -ldl -lbfd 
+INCS = -I$(INC_DIR) -L$(LIB_DIR)
+LIBS = -L${BUILD_DIR} -l:libcallstacklogger.a 
+#LIBS += -ldl -lbfd 
 
 SOURCES := $(shell find . -name "*.c" -printf '%f\n')
-_HEADERS  := $(shell find $(IDIR) -name "*.h" -printf '%f\n')
+_HEADERS  := $(shell find $(INC_DIR) -name "*.h" -printf '%f\n')
 
-HEADERS = $(patsubst %,$(IDIR)/%,$(_HEADERS))
+HEADERS = $(patsubst %,$(INC_DIR)/%,$(_HEADERS))
 
-_OBJS = $(SOURCES:.c=.o)
-OBJS = $(patsubst %,$(ODIR)/%,$(_OBJS))
+OBJS := $(patsubst %.c,%.o,$(SOURCES))
 
-EXECUTABLE = $(ODIR)/runDemo
+EXECUTABLE = $(BUILD_DIR)/runDemo
 
 ifdef log_with_addr
 	CFLAGS += -DLOG_ADDR
@@ -57,7 +54,7 @@ $(EXECUTABLE): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
 
 
-$(ODIR)/%.o : %.c $(HEADERS)
+$(OBJS) : %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCS)
 
 run:

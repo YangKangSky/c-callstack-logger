@@ -24,22 +24,37 @@ AR?= ar
 #CFLAGS += -finstrument-functions-exclude-file-list=$(CPP_STD_INCLUDES)
 #CFLAGS = -g -Wall -rdynamic -finstrument-functions 
 
-IDIR = ../include
-ODIR = ../build
-LIB_DIR = ../lib
-INCS = -I$(IDIR) -L$(LIB_DIR)
+
+#LOCAL_PATH:=$(shell pwd)
+#LIB_DIR := $(TARGET_DIR)/usr/lib
+#ROOT_PATH = $(LOCAL_PATH)
+
+
+
 LIBS = -ldl -lbfd
 
-LIB_STATIC = $(ODIR)/libcallstacklogger.a
+LIB_STATIC = ${BUILD_DIR}/libcallstacklogger.a
 
-#SOURCES := $(shell find . -name "*.c" -printf '%f\n')
-SOURCES := trace.c backtrace-symbols.c
-_HEADERS  := $(shell find $(IDIR) -name "*.h" -printf '%f\n')
+BACKTRACE_SRC := \
+    backtrace-symbols.c  \
+    lookup-symbol.c \
 
-HEADERS = $(patsubst %,$(IDIR)/%,$(_HEADERS))
+CALLSTACKLOG_SRC := \
+    trace.c  \
+    reslove.c \
 
-_OBJS = $(SOURCES:.c=.o)
-OBJS = $(patsubst %,$(ODIR)/%,$(_OBJS))
+SOURCES := \
+    $(CALLSTACKLOG_SRC) \
+
+OBJS := $(patsubst %.c,%.o,$(SOURCES))
+
+
+INCLUDE := $(ROOT_PATH)/include \
+
+
+CFLAGS += $(patsubst %,-I%,$(INCLUDE))
+
+#LDFLAGS += -lmediahal_tsplayer -L. -lamdvr -llog -lcutils -lpthread -std=c++17 -D__unused=
 
 ifdef log_with_addr
 	CFLAGS += -DLOG_ADDR
@@ -60,16 +75,15 @@ $(LIB_STATIC): $(OBJS)
 	- rm -f $(LIB_STATIC)
 	$(AR) rcs  $(LIB_STATIC) $(OBJS)
 
-$(ODIR)/backtrace-symbols.o : backtrace-symbols.c $(HEADERS)
+#$(ODIR)/backtrace-symbols.o : backtrace-symbols.c $(HEADERS)
+#	$(CC) $(CFLAGS_DISINST) -c $< -o $@ $(INCS)
+
+#$(ODIR)/trace.o : trace.c $(HEADERS)
+#	$(CC) $(CFLAGS_DISINST) -c $< -o $@ $(INCS)
+
+
+$(OBJS) : %.o : %.c
 	$(CC) $(CFLAGS_DISINST) -c $< -o $@ $(INCS)
-
-$(ODIR)/trace.o : trace.c $(HEADERS)
-	$(CC) $(CFLAGS_DISINST) -c $< -o $@ $(INCS)
-
-$(ODIR)/%.o : %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@ $(INCS)
-
-
 
 
 .PHONY: clean

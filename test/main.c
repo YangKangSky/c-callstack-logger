@@ -1,11 +1,16 @@
+#include <execinfo.h>
+#include <signal.h>
+
+#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
-extern void backtrace_symbols_fd_in(void *const *buffer, int size, int fd);
+//extern void backtrace_symbols_fd(void *const *buffer, int size, int fd);
 
 void func5() {
     void *buffer[1] = {func5};
-    backtrace_symbols_fd_in(buffer, 1, STDOUT_FILENO);
+    backtrace_symbols_fd(buffer, 1, STDOUT_FILENO);
     printf("This is func5\n");
 }
 
