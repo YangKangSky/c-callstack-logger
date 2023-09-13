@@ -35,3 +35,9 @@ backtrace:
 https://chromium.googlesource.com/chromiumos/third_party/cairo/+/master/util/backtrace-symbols.c
 
 https://www.codenong.com/34054445/
+
+https://www.cnblogs.com/sky-heaven/p/10384786.html
+
+https://tonybai.com/2011/07/13/add-enter-and-exit-trace-for-your-function/
+
+https://www.51cto.com/article/697940.html
