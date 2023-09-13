@@ -32,7 +32,8 @@ LIBS = -ldl -lbfd
 
 LIB_STATIC = $(ODIR)/libcallstacklogger.a
 
-SOURCES := $(shell find . -name "*.c" -printf '%f\n')
+#SOURCES := $(shell find . -name "*.c" -printf '%f\n')
+SOURCES := trace.c backtrace-symbols.c
 _HEADERS  := $(shell find $(IDIR) -name "*.h" -printf '%f\n')
 
 HEADERS = $(patsubst %,$(IDIR)/%,$(_HEADERS))

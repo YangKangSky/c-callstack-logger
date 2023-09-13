@@ -44,3 +44,7 @@ https://www.51cto.com/article/697940.html
 
 https://www.jianshu.com/p/1fbd66f2b135
 
+
+
+backtrace的代码取自于binutils工具的addr2line.c。
+

@@ -5,13 +5,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include "backtrace-symbols.h"
 
 void __cyg_profile_func_exit(void *callee, void *callsite) __attribute__((no_instrument_function));
 void __cyg_profile_func_enter(void *callee, void *callsite) __attribute__((no_instrument_function));
 
-
-extern char **backtrace_symbols_in(void *const *buffer, int size);
-extern void SymbolReslove(const char* symbol, char* filename, int* line_number, char* function_name) ;
 
 
 static FILE *fp_trace;
