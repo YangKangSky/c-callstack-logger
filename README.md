@@ -41,3 +41,6 @@ https://www.cnblogs.com/sky-heaven/p/10384786.html
 https://tonybai.com/2011/07/13/add-enter-and-exit-trace-for-your-function/
 
 https://www.51cto.com/article/697940.html
+
+https://www.jianshu.com/p/1fbd66f2b135
+
