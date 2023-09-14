@@ -1,6 +1,12 @@
 #ifndef RESLOVE_SYMBOLS_H
 
+#if 0
 #include <execinfo.h>
+#else
+#include "backtrace-symbols.h"
+#endif
+
+
 #include <signal.h>
 
 #include <string.h>

@@ -31,7 +31,7 @@ AR?= ar
 
 
 
-LIBS = -ldl -lbfd
+LIBS = -ldl -lbfd -lbacktrace
 
 LIB_STATIC = ${BUILD_DIR}/libcallstacklogger.a
 
@@ -45,6 +45,7 @@ CALLSTACKLOG_SRC := \
 
 SOURCES := \
     $(CALLSTACKLOG_SRC) \
+	backtrace-symbols-libbacktrace.c \
 
 OBJS := $(patsubst %.c,%.o,$(SOURCES))
 
