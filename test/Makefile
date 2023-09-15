@@ -26,7 +26,7 @@ CC ?= cc
 
 
 
-CFLAGS = -g -Wall -rdynamic -finstrument-functions 
+CFLAGS += -g -Wall -rdynamic -finstrument-functions 
 #CFLAGS += -finstrument-functions-exclude-function-list=sym,sym,...
 CFLAGS += -finstrument-functions-exclude-function-list=main
 #CFLAGS += -finstrument-functions-exclude-file-list=$(CPP_STD_INCLUDES)
@@ -55,7 +55,7 @@ ifdef log_not_demangled
 	CFLAGS += -DLOG_NOT_DEMANGLED
 endif
 ifdef disable_instrumentation
-	CFLAGS = -g -Wall  -DDISABLE_INSTRUMENTATION
+	CFLAGS += -g -Wall  -DDISABLE_INSTRUMENTATION
 endif
 
 

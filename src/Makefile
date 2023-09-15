@@ -64,7 +64,7 @@ ifdef log_not_demangled
 	CFLAGS += -DLOG_NOT_DEMANGLED
 endif
 ifdef disable_instrumentation
-	CFLAGS = -g -Wall  -DDISABLE_INSTRUMENTATION
+	CFLAGS += -g -Wall  -DDISABLE_INSTRUMENTATION
 endif
 
 CFLAGS_DISINST = -g -Wall  -DDISABLE_INSTRUMENTATION
