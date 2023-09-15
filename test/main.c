@@ -35,15 +35,8 @@ void func1() {
 }
 
 
-extern void trace_begin() ;
-extern void trace_end() ;
 
 int main() {
-	trace_begin() ;
-	printf("-111-----------\n");
     func1();
-	printf("--222----------\n");
-	trace_end() ;
-	printf("---333---------\n");
     return 0;
 }

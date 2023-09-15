@@ -51,10 +51,10 @@ bp_callback (void *vdata, uintptr_t pc ,
       assert (p->function != NULL);
     }
 
-   printf("Symbol: %s\n", function);
-    printf("File: %s\n", filename);
-    printf("Line: %d\n", lineno);
-    printf("\n");
+    //printf("Symbol: %s\n", function);
+    //printf("File: %s\n", filename);
+    //printf("Line: %d\n", lineno);
+    //printf("\n");
   return 0;
 }
 
@@ -85,9 +85,9 @@ int get_function_info_by_address(uintptr_t buffer, struct FunctionInfo *info) {
 	int result = backtrace_pcinfo(state, buffer, bp_callback, bp_error_callback, info);
     //backtrace_free(state);
 	
-	printf("Symbol-5: %s\n", info->function);
-	printf("File1-5: %s\n", info->filename);
-	printf("Line1-5: %d\n", info->lineno);
+	//printf("Symbol-5: %s\n", info->function);
+	//printf("File1-5: %s\n", info->filename);
+	//printf("Line1-5: %d\n", info->lineno);
 	
    return result;
 }
@@ -114,9 +114,9 @@ void SymbolReslove(const void *addr, char* filename, int* line_number, char* fun
         if (function_name != NULL)
             function_name[0] = '\0';
     }
-	printf("File1: %s\n", filename);
-	printf("Line1: %d\n", *line_number);
-	printf("Function1: %s\n", function_name);
+	//printf("File1: %s\n", filename);
+	//printf("Line1: %d\n", *line_number);
+	//printf("Function1: %s\n", function_name);
 }
 
 

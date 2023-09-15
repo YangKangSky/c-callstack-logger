@@ -19,8 +19,29 @@ void __cyg_profile_func_enter(void *callee, void *callsite)
     char file_callee[256],file_callsite[256];
     int line_callee,line_callsite;
     char function_callee[256],function_callsite[256];
+	
+	char* env_store_path = NULL;
 
-	if ((fp_trace != NULL) && (callee != NULL) && (callsite != NULL))
+	if(fp_trace == NULL)
+	{
+		env_store_path = getenv("C_CALLTRACE_LOGGER_PATH");
+		if((env_store_path != NULL) && (!strcmp(env_store_path, "STDOUT")))
+		{
+			fp_trace = stdout;
+		}
+		else if(env_store_path != NULL)
+		{
+			fp_trace = fopen(env_store_path, "w+");
+		}
+		
+		if (env_store_path == NULL)
+		{
+			fp_trace = fopen("trace.out", "w+");
+		}
+	}
+
+
+	if ((callee != NULL) && (callsite != NULL))
 	{
 		// fprintf(fp_trace, "enter %p\n", callee);	
 		SymbolReslove(callee,file_callee, &line_callee, function_callee);
@@ -39,7 +60,7 @@ void __cyg_profile_func_exit(void *callee, void *callsite)
     int line_callee,line_callsite;
     char function_callee[256],function_callsite[256];
 
-	if ((fp_trace != NULL) && (callee != NULL) && (callsite != NULL))
+	if ((callee != NULL) && (callsite != NULL))
 	{
 		// fprintf(fp_trace, "enter %p\n", callee);	
 		SymbolReslove(callee,file_callee, &line_callee, function_callee);
