@@ -2,8 +2,16 @@
 #include <stdlib.h>
 #include "reslove.h"
 
+typedef struct
+{
+	char filename[256];
+	int line_number;
+	char function_name[256];
+} BacktraceEntry;
+
+
 /*  main.c:12	func4() */
-void parseBacktraceSymbol(const char *symbol, BacktraceEntry *entry)
+static void parseBacktraceSymbol(const char *symbol, BacktraceEntry *entry)
 {
 	BacktraceEntry *info = entry; //(BacktraceInfo*)malloc(sizeof(BacktraceInfo));
 	if (info == NULL)
@@ -31,8 +39,11 @@ void parseBacktraceSymbol(const char *symbol, BacktraceEntry *entry)
 	// printf("File: %s, Line: %d, Function: %s\n", entry->filename, entry->line_number, entry->function_name);
 }
 
-void SymbolReslove(const char* symbol, char* filename, int* line_number, char* function_name) {
+void SymbolReslove(const void *addr, char* filename, int* line_number, char* function_name) {
     BacktraceEntry entry;
+	void *buffer[1] = {addr};
+
+	strings = backtrace_symbols(buffer, 1);
     parseBacktraceSymbol(symbol, &entry);
 
     strncpy(filename, entry.filename, sizeof(entry.filename) - 1);

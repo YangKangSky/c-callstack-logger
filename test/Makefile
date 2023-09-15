@@ -24,10 +24,12 @@ CC ?= cc
 CFLAGS = -g -Wall -rdynamic -finstrument-functions 
 
 INCS = -I$(INC_DIR) -L$(LIB_DIR)
-LIBS = -L${BUILD_DIR} -l:libcallstacklogger.a 
+LIBS = -L${BUILD_DIR} -l:libcallstacklogger.a  -lbacktrace
 #LIBS += -ldl -lbfd 
 
-SOURCES := $(shell find . -name "*.c" -printf '%f\n')
+#SOURCES := $(shell find . -name "*.c" -printf '%f\n')
+
+SOURCES := main.c
 _HEADERS  := $(shell find $(INC_DIR) -name "*.h" -printf '%f\n')
 
 HEADERS = $(patsubst %,$(INC_DIR)/%,$(_HEADERS))

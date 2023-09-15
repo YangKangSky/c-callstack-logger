@@ -3,7 +3,7 @@
 #if 0
 #include <execinfo.h>
 #else
-#include "backtrace-symbols.h"
+#include "backtrace.h"
 #endif
 
 
@@ -13,16 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct
-{
-	char filename[256];
-	int line_number;
-	char function_name[256];
-} BacktraceEntry;
 
-
-void SymbolReslove(const char* symbol, char* filename, int* line_number, char* function_name);
-void parseBacktraceSymbol(const char *symbol, BacktraceEntry *entry);
-
+void SymbolReslove(const void *addr, char* filename, int* line_number, char* function_name) ;
 
 #endif /*RESLOVE_SYMBOLS_H */

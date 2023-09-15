@@ -36,16 +36,16 @@ LIBS = -ldl -lbfd -lbacktrace
 LIB_STATIC = ${BUILD_DIR}/libcallstacklogger.a
 
 BACKTRACE_SRC := \
-    backtrace-symbols.c  \
-    lookup-symbol.c \
+    resolve_libbacktrace/reslove.c  \
 
 CALLSTACKLOG_SRC := \
     trace.c  \
-    reslove.c \
+
+
 
 SOURCES := \
     $(CALLSTACKLOG_SRC) \
-	backtrace-symbols-libbacktrace.c \
+	$(BACKTRACE_SRC) \
 
 OBJS := $(patsubst %.c,%.o,$(SOURCES))
 

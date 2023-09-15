@@ -16,67 +16,40 @@ static FILE *fp_trace;
 
 void __cyg_profile_func_enter(void *callee, void *callsite)
 {
-
-	char **strings;
     char file_callee[256],file_callsite[256];
     int line_callee,line_callsite;
     char function_callee[256],function_callsite[256];
 
-
-	
-	if ((fp_trace != NULL) && (callee != NULL))
+	if ((fp_trace != NULL) && (callee != NULL) && (callsite != NULL))
 	{
+		// fprintf(fp_trace, "enter %p\n", callee);	
+		SymbolReslove(callee,file_callee, &line_callee, function_callee);
 
-		// fprintf(fp_trace, "enter %p\n", callee);
-
-		void *buffer[2] = {callee, callsite};
-
-		strings = backtrace_symbols(buffer, 2);
-
-		int j;
-		for (j = 0; j < 2; j++)
-			printf("---%s\n", strings[j]);
-		fprintf(fp_trace, "enter %s %p(called from %s)  \n", strings[0], callee, strings[1]);
-		
-		SymbolReslove(strings[0],file_callee, &line_callee, function_callee);
-
-		SymbolReslove(strings[1],file_callsite, &line_callsite, function_callsite);
+		SymbolReslove(callsite,file_callsite, &line_callsite, function_callsite);
 		//printf("called from File: %s, Line: %d, Function: %s\n", file_callsite, line_callsite, function_callsite);
 		fprintf(fp_trace, "%s enter  (called from File: %s, Line: %d, Function: %s)\n", function_callee, file_callsite, line_callsite, function_callsite);
-
-
-		free(strings);
 	}
 }
 
 void __cyg_profile_func_exit(void *callee, void *callsite)
 {
-	char **strings;
+
+
     char file_callee[256],file_callsite[256];
     int line_callee,line_callsite;
     char function_callee[256],function_callsite[256];
 
-
-	if ((fp_trace != NULL) && (callee != NULL))
+	if ((fp_trace != NULL) && (callee != NULL) && (callsite != NULL))
 	{
-		// fprintf(fp_trace, "Exiting %p\n", callee);
+		// fprintf(fp_trace, "enter %p\n", callee);	
+		SymbolReslove(callee,file_callee, &line_callee, function_callee);
 
-		void *buffer[2] = {callee, callsite};
-
-		strings = backtrace_symbols(buffer, 2);
-		int j=0;
-		for (j = 0; j < 1; j++)
-			printf("---%s\n", strings[j]);
-		fprintf(fp_trace, "exit %s %p(called from %s)  \n", strings[0], callee, strings[1]);
-
-		SymbolReslove(strings[0],file_callee, &line_callee, function_callee);
-
-		SymbolReslove(strings[1],file_callsite, &line_callsite, function_callsite);
-
-
+		SymbolReslove(callsite,file_callsite, &line_callsite, function_callsite);
+		//printf("called from File: %s, Line: %d, Function: %s\n", file_callsite, line_callsite, function_callsite);
+		//fprintf(fp_trace, "%s exit  (called from File: %s, Line: %d, Function: %s)\n", function_callee, file_callsite, line_callsite, function_callsite);
 		fprintf(fp_trace, "%s exit  \n", function_callee);
-		free(strings);
 	}
+
 }
 
 void trace_begin()
