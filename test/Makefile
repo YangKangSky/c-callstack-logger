@@ -19,9 +19,19 @@
 #CPP_STD_INCLUDES := "${CPP_STD_INCLUDES},include/callStack.h,include/unwinder.h,include/types.h,include/format.h,include/prettyTime.h"
 #$(info $$CPP_STD_INCLUDES is [${CPP_STD_INCLUDES}])
 
+
+
+
 CC ?= cc
-#CFLAGS += -finstrument-functions-exclude-file-list=$(CPP_STD_INCLUDES)
+
+
+
 CFLAGS = -g -Wall -rdynamic -finstrument-functions 
+#CFLAGS += -finstrument-functions-exclude-function-list=sym,sym,...
+CFLAGS += -finstrument-functions-exclude-function-list=main
+#CFLAGS += -finstrument-functions-exclude-file-list=$(CPP_STD_INCLUDES)
+
+
 
 INCS = -I$(INC_DIR) -L$(LIB_DIR)
 LIBS = -L${BUILD_DIR} -l:libcallstacklogger.a  -lbacktrace
