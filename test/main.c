@@ -41,7 +41,7 @@ extern void trace_end() ;
 int main() {
 	trace_begin() ;
 	printf("-111-----------\n");
-    func5();
+    func1();
 	printf("--222----------\n");
 	trace_end() ;
 	printf("---333---------\n");
