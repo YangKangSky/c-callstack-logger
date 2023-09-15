@@ -53,7 +53,7 @@ OBJS := $(patsubst %.c,%.o,$(SOURCES))
 INCLUDE := $(ROOT_PATH)/include \
 
 
-CFLAGS += $(patsubst %,-I%,$(INCLUDE))
+CFLAGS +=  -fPIC $(patsubst %,-I%,$(INCLUDE))
 
 #LDFLAGS += -lmediahal_tsplayer -L. -lamdvr -llog -lcutils -lpthread -std=c++17 -D__unused=
 
