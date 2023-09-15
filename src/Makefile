@@ -53,7 +53,7 @@ OBJS := $(patsubst %.c,%.o,$(SOURCES))
 INCLUDE := $(ROOT_PATH)/include \
 
 
-CFLAGS +=  -fPIC $(patsubst %,-I%,$(INCLUDE))
+CFLAGS +=  $(patsubst %,-I%,$(INCLUDE))
 
 #LDFLAGS += -lmediahal_tsplayer -L. -lamdvr -llog -lcutils -lpthread -std=c++17 -D__unused=
 
@@ -68,6 +68,7 @@ ifdef disable_instrumentation
 endif
 
 CFLAGS_DISINST = -g -Wall  -DDISABLE_INSTRUMENTATION
+CFLAGS += $(CFLAGS_DISINST)
 
 .PHONY: build
 build: clean $(LIB_STATIC) 
@@ -77,14 +78,14 @@ $(LIB_STATIC): $(OBJS)
 	$(AR) rcs  $(LIB_STATIC) $(OBJS)
 
 #$(ODIR)/backtrace-symbols.o : backtrace-symbols.c $(HEADERS)
-#	$(CC) $(CFLAGS_DISINST) -c $< -o $@ $(INCS)
+#	$(CC) $(CFLAGS) -c $< -o $@ $(INCS)
 
 #$(ODIR)/trace.o : trace.c $(HEADERS)
-#	$(CC) $(CFLAGS_DISINST) -c $< -o $@ $(INCS)
+#	$(CC) $(CFLAGS) -c $< -o $@ $(INCS)
 
 
 $(OBJS) : %.o : %.c
-	$(CC) $(CFLAGS_DISINST) -c $< -o $@ $(INCS)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INCS)
 
 
 .PHONY: clean
