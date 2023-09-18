@@ -39,7 +39,7 @@ BACKTRACE_SRC := \
     resolve_libbacktrace/reslove.c  \
 
 CALLSTACKLOG_SRC := \
-    trace.c  \
+    trace.c  print.c \
 
 
 

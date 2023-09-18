@@ -12,6 +12,8 @@
 #include <backtrace.h>
 #include <backtrace-supported.h>
 
+#include "cl_print.h"
+
 //#include "testlib.h"
 
 /* Test the backtrace function with non-inlined functions.  */
@@ -68,10 +70,10 @@ bp_error_callback (void *vdata, const char *msg, int errnum)
 {
     struct FunctionInfo *p = (struct bdata *) vdata;
 
-  fprintf (stderr, "%s", msg);
+  cl_fprintf (STDERR_FILENO , "%s", msg);
   if (errnum > 0)
-    fprintf (stderr, ": %s", strerror (errnum));
-  fprintf (stderr, "\n");
+    cl_fprintf (STDERR_FILENO , ": %s", strerror (errnum));
+  cl_fprintf (STDERR_FILENO , "\n");
 
 }
 
@@ -101,11 +103,11 @@ void SymbolReslove(const void *addr, char* filename, int* line_number, char* fun
 
     if (result == 0) {
         if (filename != NULL)
-            snprintf(filename, MAX_FILENAME_LENGTH, "%s", info.filename);
+            cl_snprintf(filename, MAX_FILENAME_LENGTH, "%s", info.filename);
         if (line_number != NULL)
             *line_number = info.lineno;
         if (function_name != NULL)
-            snprintf(function_name, MAX_FUNCTION_NAME_LENGTH, "%s", info.function);
+            cl_snprintf(function_name, MAX_FUNCTION_NAME_LENGTH, "%s", info.function);
     } else {
         if (filename != NULL)
             filename[0] = '\0';
@@ -126,7 +128,7 @@ int main() {
 	uintptr_t buffer = (uintptr_t)&main;
     get_function_info_by_address(buffer, &info);
 
-        char filename[MAX_FILENAME_LENGTH];
+    char filename[MAX_FILENAME_LENGTH];
     int line_number;
     char function_name[MAX_FUNCTION_NAME_LENGTH];
 
