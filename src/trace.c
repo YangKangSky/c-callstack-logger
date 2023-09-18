@@ -30,6 +30,14 @@ void __cyg_profile_func_enter(void *callee, void *callsite)
     char function_callee[256],function_callsite[256];
 	
 	char* env_store_path = NULL;
+	char* env_debug = NULL;
+
+
+	env_debug = getenv("C_CALLTRACE_LOGGER_DEBUG");
+	if((env_debug != NULL) && (!strcmp(env_debug, "y")))
+	{
+		cl_printf("__cyg_profile_func_enter in\n");
+	}	
 
 	if(fd_trace == -1)
 	{
@@ -48,7 +56,9 @@ void __cyg_profile_func_enter(void *callee, void *callsite)
 			fd_trace = open("trace.out", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		}
 	}
+	
 
+	
 
 	if ((callee != NULL) && (callsite != NULL))
 	{
@@ -68,6 +78,15 @@ void __cyg_profile_func_exit(void *callee, void *callsite)
     char file_callee[256],file_callsite[256];
     int line_callee,line_callsite;
     char function_callee[256],function_callsite[256];
+
+	char* env_debug = NULL;
+
+
+	env_debug = getenv("C_CALLTRACE_LOGGER_DEBUG");
+	if((env_debug != NULL) && (!strcmp(env_debug, "y")))
+	{
+		cl_printf("__cyg_profile_func_exit in\n");
+	}	
 
 	if ((callee != NULL) && (callsite != NULL))
 	{
