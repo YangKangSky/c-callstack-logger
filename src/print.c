@@ -372,7 +372,9 @@ again:
                     //
                     // Determine the length of the string.
                     //
-                    for(ulIdx = 0; pcStr[ulIdx] != '\0'; ulIdx++)
+                    if(pcStr == NULL)
+                        break;
+                    for(ulIdx = 0; pcStr[ulIdx] != '\0' ; ulIdx++)
                     {
                     }
 
