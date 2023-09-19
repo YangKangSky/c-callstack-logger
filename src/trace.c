@@ -26,13 +26,19 @@ int fd_trace = -1; // 文件描述符，-1 表示未打开文件
 void  __attribute__((optimize("0"))) __cyg_profile_func_enter(void *callee, void *callsite)
 {
     char file_callee[MAX_FILENAME_LENGTH],file_callsite[MAX_FILENAME_LENGTH];
-    int line_callee,line_callsite;
+    int line_callee = 0,line_callsite = 0;
     char function_callee[MAX_FUNCTION_NAME_LENGTH],function_callsite[MAX_FUNCTION_NAME_LENGTH];
 	
 	char* env_store_path = NULL;
 	char* env_debug = NULL;
 
 
+
+	memset(file_callee, 0x00, MAX_FILENAME_LENGTH);
+	memset(file_callsite, 0x00, MAX_FILENAME_LENGTH);
+	memset(function_callee, 0x00, MAX_FUNCTION_NAME_LENGTH);
+	memset(function_callsite, 0x00, MAX_FUNCTION_NAME_LENGTH);
+	
 	env_debug = getenv("C_CALLTRACE_LOGGER_DEBUG");
 	if((env_debug != NULL) && (!strcmp(env_debug, "y")))
 	{
@@ -76,11 +82,15 @@ void __attribute__((optimize("0"))) __cyg_profile_func_exit(void *callee, void *
 
 
     char file_callee[MAX_FILENAME_LENGTH],file_callsite[MAX_FILENAME_LENGTH];
-    int line_callee,line_callsite;
+    int line_callee = 0,line_callsite = 0;
     char function_callee[MAX_FUNCTION_NAME_LENGTH],function_callsite[MAX_FUNCTION_NAME_LENGTH];
 
 	char* env_debug = NULL;
 
+	memset(file_callee, 0x00, MAX_FILENAME_LENGTH);
+	memset(file_callsite, 0x00, MAX_FILENAME_LENGTH);
+	memset(function_callee, 0x00, MAX_FUNCTION_NAME_LENGTH);
+	memset(function_callsite, 0x00, MAX_FUNCTION_NAME_LENGTH);
 
 	env_debug = getenv("C_CALLTRACE_LOGGER_DEBUG");
 	if((env_debug != NULL) && (!strcmp(env_debug, "y")))
