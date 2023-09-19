@@ -1,6 +1,6 @@
 
-#define MAX_FILENAME_LENGTH 128
-#define MAX_FUNCTION_NAME_LENGTH 128
+#define MAX_FILENAME_LENGTH 1024
+#define MAX_FUNCTION_NAME_LENGTH 1024
 
 #include <assert.h>
 #include <stdio.h>
@@ -22,8 +22,7 @@
 /* The number of failures.  */
 
 //int failures;
-#define MAX_FILENAME_LENGTH 128
-#define MAX_FUNCTION_NAME_LENGTH 128
+
 struct FunctionInfo
 {
   char filename[MAX_FILENAME_LENGTH];
