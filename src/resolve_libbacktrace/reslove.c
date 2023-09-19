@@ -39,19 +39,17 @@ bp_callback (void *vdata, uintptr_t pc ,
   struct FunctionInfo *p = (struct FunctionInfo *) vdata;
 
   if (filename == NULL)
-    p->filename = NULL;
+    p->filename[0] = '\0';
   else
     {
 	  memcpy(p->filename, filename, strlen(filename));
-      assert (p->filename != NULL);
     }
   p->lineno = lineno;
   if (function == NULL)
-    p->function = NULL;
+		p->function[0] = '\0';
   else
     {
 	  memcpy(p->function, function, strlen(function));
-      assert (p->function != NULL);
     }
 
     //printf("Symbol: %s\n", function);
