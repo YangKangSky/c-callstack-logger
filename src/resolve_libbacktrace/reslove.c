@@ -22,12 +22,13 @@
 /* The number of failures.  */
 
 //int failures;
-
+#define MAX_FILENAME_LENGTH 128
+#define MAX_FUNCTION_NAME_LENGTH 128
 struct FunctionInfo
 {
-  char *filename;
+  char filename[MAX_FILENAME_LENGTH];
   int lineno;
-  char *function;
+  char function[MAX_FUNCTION_NAME_LENGTH];
 };
 
 
@@ -35,13 +36,13 @@ int
 bp_callback (void *vdata, uintptr_t pc ,
 	      const char *filename, int lineno, const char *function)
 {
-  struct FunctionInfo *p = (struct bdata *) vdata;
+  struct FunctionInfo *p = (struct FunctionInfo *) vdata;
 
   if (filename == NULL)
     p->filename = NULL;
   else
     {
-      p->filename = strdup (filename);
+	  memcpy(p->filename, filename, strlen(filename));
       assert (p->filename != NULL);
     }
   p->lineno = lineno;
@@ -49,7 +50,7 @@ bp_callback (void *vdata, uintptr_t pc ,
     p->function = NULL;
   else
     {
-      p->function = strdup (function);
+	  memcpy(p->function, function, strlen(function));
       assert (p->function != NULL);
     }
 
@@ -68,7 +69,7 @@ bp_callback (void *vdata, uintptr_t pc ,
 void
 bp_error_callback (void *vdata, const char *msg, int errnum)
 {
-    struct FunctionInfo *p = (struct bdata *) vdata;
+    struct FunctionInfo *p = (struct FunctionInfo *) vdata;
 
   cl_fprintf (STDERR_FILENO , "%s", msg);
   if (errnum > 0)
@@ -93,8 +94,7 @@ int get_function_info_by_address(uintptr_t buffer, struct FunctionInfo *info) {
 	
    return result;
 }
-#define MAX_FILENAME_LENGTH 128
-#define MAX_FUNCTION_NAME_LENGTH 128
+
 
 void SymbolReslove(const void *addr, char* filename, int* line_number, char* function_name) {
     uintptr_t address = (uintptr_t)addr;
