@@ -25,9 +25,9 @@ int fd_trace = -1; // 文件描述符，-1 表示未打开文件
 
 void  __attribute__((optimize("0"))) __cyg_profile_func_enter(void *callee, void *callsite)
 {
-    char file_callee[256],file_callsite[256];
+    char file_callee[MAX_FILENAME_LENGTH],file_callsite[MAX_FILENAME_LENGTH];
     int line_callee,line_callsite;
-    char function_callee[256],function_callsite[256];
+    char function_callee[MAX_FUNCTION_NAME_LENGTH],function_callsite[MAX_FUNCTION_NAME_LENGTH];
 	
 	char* env_store_path = NULL;
 	char* env_debug = NULL;
@@ -75,9 +75,9 @@ void __attribute__((optimize("0"))) __cyg_profile_func_exit(void *callee, void *
 {
 
 
-    char file_callee[256],file_callsite[256];
+    char file_callee[MAX_FILENAME_LENGTH],file_callsite[MAX_FILENAME_LENGTH];
     int line_callee,line_callsite;
-    char function_callee[256],function_callsite[256];
+    char function_callee[MAX_FUNCTION_NAME_LENGTH],function_callsite[MAX_FUNCTION_NAME_LENGTH];
 
 	char* env_debug = NULL;
 

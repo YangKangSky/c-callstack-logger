@@ -1,13 +1,11 @@
 
-#define MAX_FILENAME_LENGTH 1024
-#define MAX_FUNCTION_NAME_LENGTH 1024
+
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
 
 #include <backtrace.h>
 #include <backtrace-supported.h>

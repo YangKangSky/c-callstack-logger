@@ -10,6 +10,10 @@ typedef unsigned long		ef_number;
 #endif
 
 
+#define MAX_FILENAME_LENGTH 1024
+#define MAX_FUNCTION_NAME_LENGTH 1024
+
+
 void cl_printf(const char * pattern, ...);
 
 int cl_vsnprintf(char *pcBuf, unsigned long ulSize, const char *pcString, va_list vaArgP);
