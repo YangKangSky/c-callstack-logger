@@ -28,25 +28,59 @@ struct FunctionInfo
   char function[MAX_FUNCTION_NAME_LENGTH];
 };
 
+#define MAX_SUBSTRINGS 8
+#define MAX_OUTPUT_SIZE 256
+
+const char *substrings[MAX_SUBSTRINGS] = {
+    "aarch64-rdk-linux",
+    "all-rdkmllib32-linux",
+    "armv7ahf-neon-rdkmllib32-linux-gnueabi",
+    "armv7at2hf-neon-rdkmllib32-linux-gnueabi",
+    "mesonsc2_lib32_ah212_hy44q_rdk-rdk-linux",
+    "mesonsc2_lib32_ah212_hy44q_rdk-rdkmllib32-linux-gnueabi",
+	"c-callstack-logger",
+    "workspace"
+};
+
+void strip_substring(char *output, const char *input) {
+    int i;
+    for (i = 0; i < MAX_SUBSTRINGS; i++) {
+        if (strstr(input, substrings[i]) != NULL) {
+            const char *substring_ptr = strstr(input, substrings[i]);
+            strncpy(output, substring_ptr + strlen(substrings[i]) + 1, MAX_FILENAME_LENGTH);
+            return;
+        }
+    }
+
+    // 没有匹配的子字符串，将输出设置为输入
+    strcpy(output, input);
+}
+
 
 int
 bp_callback (void *vdata, uintptr_t pc ,
 	      const char *filename, int lineno, const char *function)
 {
   struct FunctionInfo *p = (struct FunctionInfo *) vdata;
+	char tmp_buf[MAX_FILENAME_LENGTH];
+
 
   if (filename == NULL)
     p->filename[0] = '\0';
   else
     {
-	  memcpy(p->filename, filename, strlen(filename));
+	 memset(tmp_buf, 0x00, MAX_FILENAME_LENGTH);
+	 strip_substring(tmp_buf, filename);
+	  memcpy(p->filename, tmp_buf, strlen(tmp_buf));
     }
   p->lineno = lineno;
   if (function == NULL)
 		p->function[0] = '\0';
   else
     {
-	  memcpy(p->function, function, strlen(function));
+      memset(tmp_buf, 0x00, MAX_FILENAME_LENGTH);
+	  strip_substring(tmp_buf, function);
+	  memcpy(p->function, tmp_buf, strlen(tmp_buf));
     }
 
     //printf("Symbol: %s\n", function);
