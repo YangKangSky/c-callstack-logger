@@ -833,6 +833,7 @@ printNumber(ef_number number, ef_number base)
 	char *		s = &buffer[NUMBER_BUFFER_SIZE];
 	int		size;
 	
+	memset(buffer, 0x00, NUMBER_BUFFER_SIZE);
 	do {
 		ef_number	digit;
 
@@ -887,7 +888,6 @@ cl_printv(const char * pattern, va_list args)
 
 					string = va_arg(args, char *);
 					length = strlen(string);
-
 					(void) write(2, string, length);
 				}
 				break;
@@ -938,8 +938,9 @@ void cl_printf(const char * pattern, ...)
 int cl_fprintf(int fd, const char *format, ...)
 {
     va_list args;
-    char buffer[1024];  // 缓冲区大小可根据需要调整
+    char buffer[MAX_FPRINTF_BUF_LENGTH];  // 缓冲区大小可根据需要调整
 
+    memset(buffer, 0x00, MAX_FPRINTF_BUF_LENGTH);
     va_start(args, format);
     int size = cl_vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);

@@ -12,7 +12,7 @@ typedef unsigned long		ef_number;
 
 #define MAX_FILENAME_LENGTH 1024
 #define MAX_FUNCTION_NAME_LENGTH 1024
-
+#define MAX_FPRINTF_BUF_LENGTH (MAX_FILENAME_LENGTH * 2)
 
 void cl_printf(const char * pattern, ...);
 

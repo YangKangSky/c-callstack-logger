@@ -128,6 +128,8 @@ int get_function_info_by_address(uintptr_t buffer, struct FunctionInfo *info) {
 void SymbolReslove(const void *addr, char* filename, int* line_number, char* function_name) {
     uintptr_t address = (uintptr_t)addr;
     struct FunctionInfo info;
+    
+    memset(&info, 0x00, sizeof(struct FunctionInfo));
     int result = get_function_info_by_address(address, &info);
 
     if (result == 0) {
@@ -145,9 +147,9 @@ void SymbolReslove(const void *addr, char* filename, int* line_number, char* fun
         if (function_name != NULL)
             function_name[0] = '\0';
     }
-	//printf("File1: %s\n", filename);
-	//printf("Line1: %d\n", *line_number);
-	//printf("Function1: %s\n", function_name);
+	//cl_printf("File1: %s\n", filename);
+	//cl_printf("Line1: %d\n", *line_number);
+	//cl_printf("Function1: %s\n", function_name);
 }
 
 
